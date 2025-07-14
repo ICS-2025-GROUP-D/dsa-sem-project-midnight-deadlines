@@ -21,7 +21,7 @@ from widgets.device_section import create_device_controls
 from widgets.camera_section import create_camera_section
 from widgets.music_player import create_music_player
 from widgets.air_conditioner_section import create_air_conditioner_section
-
+from widgets.weather_section import create_weather_section
  
 class SmartHomeApp(ctk.CTk):
     def __init__(self):
@@ -129,8 +129,7 @@ class SmartHomeApp(ctk.CTk):
         create_camera_section(self)
         create_music_player(self)
         create_air_conditioner_section(self)
-
-
+        create_weather_section(self)
 
 if __name__ == "__main__":
     app = SmartHomeApp()
