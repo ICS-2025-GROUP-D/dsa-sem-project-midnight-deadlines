@@ -7,7 +7,7 @@ music_manager = MusicManager()
 
 def create_music_player(parent, x=0, y=0):
     frame = ctk.CTkFrame(parent, width=443, height=100, fg_color="#333333")
-    frame.place(x=57, y=600)
+    frame.place(x=57, y=640)
 
     # Album icon
     album_icon = ctk.CTkImage(light_image=Image.open("images/music.png"), size=(70, 70))

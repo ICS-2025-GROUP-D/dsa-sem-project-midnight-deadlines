@@ -30,6 +30,9 @@ Each member was responsible for a module and contributed their function into the
 ```
 
 ├── main.py
+├── managers
+│   ├── music_manager.py
+│   └── room_manager.py
 ├── README.md
 ├── requirements.txt
 ├── semester_project_brief.md
@@ -37,7 +40,9 @@ Each member was responsible for a module and contributed their function into the
 ├── utils
 │   ├── events.py
 │   ├── helpers.py
-│   └── __pycache__
+│   ├── linked_list.py
+│   ├── queue.py
+│   └── stack.py
 ├── widgets
 │   ├── air_conditioner_section.py
 │   ├── camera_section.py
