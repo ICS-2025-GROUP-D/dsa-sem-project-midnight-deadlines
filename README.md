@@ -8,6 +8,50 @@
 
 ---
 
+# Group : `midnight-deadlines`
+
+## 👥 Members & Modules
+
+Each member was responsible for a module and contributed their function into the shared `PrintQueueManager` class:
+
+| Name              | No.           | Module                             | Contribution                                                                                   |
+| ----------------- | ---------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Richie Mwangi** | 189293 | Music player queue              | Built the music player (`music_player.py`) with a queue or predefined songs.        |
+| **Ernest Njoroge**  | 190023 | Camera widget            | Implemented the CCTV widget section, its just a for display at the moment (`camera_section.py`).     |
+| **Lynn Ivy** | 175793 | Devices widget and database handling               | Developed the user database system and also the GUI for devices (`device_section.py`).               |
+| **Joseph Kinyuru**   | 167600 | Rooms widget     | Implemented the rooms widget with different tabs for various rooms and devices within them.  (`room_tabs.py`). |
+| **Jean Njoroge**  | 187923 | Weather widget | Developed the mock weather widget that should keep track of current weather updates (`weather_section.py`).     |
+| **Laureen Angie**  | 191876 | Air conditioning widget          | Implemented the air conditioning widget that handles the overall temp of the house. (`air_conditioner_section.py`).          |
+
+---
+
+## 📁 Project Structure
+
+```
+
+├── main.py
+├── README.md
+├── requirements.txt
+├── semester_project_brief.md
+├── users.db
+├── utils
+│   ├── events.py
+│   ├── helpers.py
+│   └── __pycache__
+├── widgets
+│   ├── air_conditioner_section.py
+│   ├── camera_section.py
+│   ├── device_section.py
+│   ├── music_player.py
+│   ├── room_tabs.py
+│   └── weather_section.py
+└── images/
+    .....
+
+```
+
+---
+
 ## Getting Started
 
 Follow these steps to set up and run the Smart Home Dashboard locally.
@@ -63,14 +107,3 @@ Follow these steps to set up and run the Smart Home Dashboard locally.
     ```bash
     deactivate
     ```
-
----
-
-**Developed by:** 
-
-* Richie Mwangi
-* Jean Njoroge
-* Laureen Angie
-* Ivy Lynnn
-* Joseph Kinyuru
-* Ernest Kangethe
