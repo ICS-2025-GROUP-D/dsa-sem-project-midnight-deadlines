@@ -24,12 +24,37 @@ from widgets.air_conditioner_section import create_air_conditioner_section
 from widgets.weather_section import create_weather_section
 
 
+# Stack to track add and update actions
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop() if self.items else None
+
+# Queue to track deleted users
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        return self.items.pop() if self.items else None
+
+ 
 class SmartHomeApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Smart Home Dashboard")
         self.geometry("1200x650")
         self.protocol("WM_DELETE_WINDOW", lambda: self.destroy())
+        self.undo_stack = Stack()
+        self.trash_queue = Queue()
 
         # Title Label
         self.name_var = ctk.StringVar(value="Hello")
@@ -97,36 +122,37 @@ class SmartHomeApp(ctk.CTk):
         self.name_entry.insert(0, selected_name)
 
     def add_user(self):
-        name = self.name_entry.get().strip()
-        if not name:
-            return
-        self.cursor.execute("SELECT COUNT(*) FROM user")
-        count = self.cursor.fetchone()[0]
-        if count >= 5:
-            print("Maximum of 3 users allowed.")
-            return
-        self.cursor.execute("INSERT INTO user (name) VALUES (?)", (name,))
+     name = self.name_entry.get().strip()
+     if not name:
+        return
+     self.cursor.execute("SELECT COUNT(*) FROM user")
+     count = self.cursor.fetchone()[0]
+     if count >= 5:
+        print("Maximum of 3 users allowed.")
+        return
+     self.cursor.execute("INSERT INTO user (name) VALUES (?)", (name,))
+     self.conn.commit()
+     self.name_entry.delete(0, "end")
+     self.load_users()
+     
+     
+    def update_user(self):
+     selected = self.user_dropdown.get()
+     new_name = self.name_entry.get().strip()
+     if selected and new_name:
+        self.undo_stack.push(("update", selected, new_name))  # ✅ move here
+        self.cursor.execute("UPDATE user SET name = ? WHERE name = ?", (new_name, selected))
         self.conn.commit()
         self.name_entry.delete(0, "end")
         self.load_users()
-
-    def update_user(self):
-        selected = self.user_dropdown.get()
-        new_name = self.name_entry.get().strip()
-        if selected and new_name:
-            self.cursor.execute(
-                "UPDATE user SET name = ? WHERE name = ?", (new_name, selected)
-            )
-            self.conn.commit()
-            self.name_entry.delete(0, "end")
-            self.load_users()
-
+        
     def delete_user(self):
-        selected = self.user_dropdown.get()
-        if selected and selected != "No users":
-            self.cursor.execute("DELETE FROM user WHERE name = ?", (selected,))
-            self.conn.commit()
-            self.load_users()
+     selected = self.user_dropdown.get()
+     if selected and selected != "No users":
+        self.trash_queue.enqueue(selected)  # ✅ track deleted user
+        self.cursor.execute("DELETE FROM user WHERE name = ?", (selected,))
+        self.conn.commit()
+        self.load_users()
 
     def load_saved_name(self):
         self.cursor.execute("SELECT name FROM user ORDER BY id DESC LIMIT 1")
